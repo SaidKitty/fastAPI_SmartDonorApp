@@ -12,12 +12,6 @@ model = joblib.load('xgboost_modelNew1.pkl')
 scaler = joblib.load('scaler.pkl')
 label_encoders = joblib.load('label_encoders.pkl')
 
-@app.get("/")
-async def read_root():
-    return {"message": "Welcome to the Smart Donor Prediction API. Use /predict to get predictions."}
-
-
-
 # Request model
 class SmartDonorApp(BaseModel):
     bloodGroup: str
@@ -52,7 +46,7 @@ async def predict_score(features: List[SmartDonorApp]):
         input_data[col] = le.transform(input_data[col])
 
     # Scale numeric values using the saved scaler
-    numeric_cols = ['daysSinceLastDonation', 'prefferedFreq', 'rateService']
+    numeric_cols = ['daysSinceLastDonation', 'prefferedFreq', 'rateService', 'yob']
     input_data[numeric_cols] = scaler.transform(input_data[numeric_cols])
 
     # Pass the correctly formatted data to the model
