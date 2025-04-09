@@ -45,13 +45,13 @@ async def predict_score(features: List[SmartDonorApp]):
         return {"error": f"Missing columns: {missing_cols}"}
 
     # Encode categorical columns using label encoders
-    categorical_cols = ['bloodGroup', 'occupation',  'timesDonated', 'convTime', 'reaction', 'encouragement', 'convLocality']
+    categorical_cols = ['bloodGroup', 'occupation', 'convTime', 'timesDonated',  'reaction', 'encouragement', 'convLocality']
     for col in categorical_cols:
         le = label_encoders[col]  # Load corresponding encoder
         input_data[col] = le.transform(input_data[col])
 
     # Scale numeric values using the saved scaler
-    numeric_cols = ['yob', 'daysSinceLastDonation', 'prefferedFreq', 'rateService' ]
+    numeric_cols = ['daysSinceLastDonation', 'prefferedFreq', 'rateService', 'yob']
     input_data[numeric_cols] = scaler.transform(input_data[numeric_cols])
 
     # Pass the correctly formatted data to the model
