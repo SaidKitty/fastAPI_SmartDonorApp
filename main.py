@@ -12,6 +12,12 @@ model = joblib.load('xgboost_modelNew1.pkl')
 scaler = joblib.load('scaler.pkl')
 label_encoders = joblib.load('label_encoders.pkl')
 
+@app.get("/")
+async def read_root():
+    return {"message": "Welcome to the Smart Donor Prediction API. Use /predict to get predictions."}
+
+
+
 # Request model
 class SmartDonorApp(BaseModel):
     bloodGroup: str
